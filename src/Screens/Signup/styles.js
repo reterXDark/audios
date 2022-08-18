@@ -1,0 +1,117 @@
+import {StyleSheet, Dimensions} from 'react-native';
+import {
+  DARK_THEME,
+  Helvetica_Neue_BoldCondensed,
+  Helvetica_Neue_Medium,
+  LIGHT_THEME,
+  PRIMARY_PURPLE,
+} from '../../helper/commonStyle';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: LIGHT_THEME,
+  },
+  appLogoContainer: {
+    width: windowWidth * 0.5,
+    height: windowHeight * 0.3,
+    // backgroundColor: 'tomato',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  AppLogoStyles: {
+    width: windowWidth * 0.5,
+    height: windowHeight * 0.3,
+    alignSelf: 'center',
+  },
+  authContainer: {
+    // backgroundColor: 'tomato',
+    alignSelf: 'center',
+    width: windowWidth * 0.95,
+    height: windowHeight * 0.4,
+    borderRadius: 20,
+    // position: 'absolute',
+    // top: (windowHeight * 1.0) / 4,
+    // bottom: (windowHeight * 1.0) / 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: windowHeight * 0.15,
+  },
+  inputContainer: {
+    borderRadius: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: windowHeight * 0.06,
+    width: windowWidth * 0.8,
+    borderWidth: 1,
+    borderColor: DARK_THEME,
+    // backgroundColor: 'tomato',
+    margin: 10,
+  },
+  inputStyle: {
+    fontFamily: Helvetica_Neue_BoldCondensed,
+    fontSize: 18,
+    // backgroundColor: 'tomato',
+    width: windowWidth * 0.7,
+    color: DARK_THEME,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+  forgotPassAndCheckboxContainer: {
+    // backgroundColor: 'tomato',
+    width: windowWidth * 0.8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  customAuthButton: {
+    backgroundColor: DARK_THEME,
+    height: windowHeight * 0.07,
+    width: windowWidth * 0.8,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    borderRadius: 100,
+    marginTop: windowHeight * 0.04,
+    alignSelf: 'center',
+    elevation: 3,
+    flexDirection: 'row',
+    marginBottom: windowHeight * 0.03,
+  },
+  customAuthButtonText: {
+    fontFamily: Helvetica_Neue_Medium,
+    color: LIGHT_THEME,
+    fontSize: 16,
+    lineHeight: 20,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    alignSelf: 'center',
+  },
+  termsText: {
+    fontFamily: Helvetica_Neue_BoldCondensed,
+    fontSize: 16,
+    marginLeft: 15,
+    color: DARK_THEME,
+  },
+  authButtonText: {
+    fontFamily: Helvetica_Neue_BoldCondensed,
+    color: PRIMARY_PURPLE,
+    fontSize: 16,
+  },
+  errorMessageTextStyle: {
+    color: 'red',
+    textAlign: 'center',
+    // backgroundColor: 'gold',
+    width: windowWidth * 0.6,
+    fontFamily: Helvetica_Neue_BoldCondensed,
+    alignSelf: 'center',
+    fontSize: 12,
+  },
+});
+
+export default styles;
