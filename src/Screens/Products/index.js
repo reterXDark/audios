@@ -177,6 +177,9 @@ const Products = props => {
   const back = () => {
     props.navigation.goBack();
   };
+  const goToCart = () => {
+    props.navigation.navigate(NavigationStrings.Cart);
+  };
   const navigateToDetails = ({
     id,
     packageName,
@@ -201,6 +204,30 @@ const Products = props => {
     });
   };
 
+  const navigateToProductBrands = ({
+    id,
+    packageName,
+    packageDescription,
+    price,
+    SpeakerImage,
+    quantity,
+    // Brand_1,
+    // Brand_2,
+    // Brand_3,
+  }) => {
+    props.navigation.navigate(NavigationStrings.ProductBrands, {
+      id: id,
+      packageName: packageName,
+      packageDescription: packageDescription,
+      price: price,
+      SpeakerImage: SpeakerImage,
+      quantity: quantity,
+      // Brand_1: Brand_1,
+      // Brand_2: Brand_2,
+      // Brand_3: Brand_3,
+    });
+  };
+
   return (
     <View style={styles.container}>
       {/*  */}
@@ -210,6 +237,10 @@ const Products = props => {
         showBackIconColor={DARK_THEME}
         onPressCustom={() => {
           back();
+        }}
+        showCartButton={true}
+        goToCartPress={() => {
+          goToCart();
         }}
       />
       {/* up pickup details */}
@@ -298,7 +329,7 @@ const Products = props => {
                   // Brand_2={Brand_2}
                   // Brand_3={Brand_3}
                   onPress={() => {
-                    navigateToDetails({
+                    navigateToProductBrands({
                       id,
                       packageName,
                       packageDescription,

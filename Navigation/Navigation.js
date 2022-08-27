@@ -16,6 +16,7 @@ import {
   OrderHistory,
   ProductDetails,
   Products,
+  ProductsBrands,
   Profile,
   Receipt,
   Rental,
@@ -91,6 +92,10 @@ const RentalStackNavigator = () => {
         component={OrderHistory}
       />
       <RentalStack.Screen name={NavigationStrings.Signup} component={Signup} />
+      <RentalStack.Screen
+        name={NavigationStrings.ProductBrands}
+        component={ProductsBrands}
+      />
     </RentalStack.Navigator>
   );
 };

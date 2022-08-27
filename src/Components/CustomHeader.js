@@ -20,6 +20,8 @@ const CustomHeader = ({
   showBackIcon,
   headerText,
   showBackIconColor,
+  showCartButton,
+  goToCartPress,
 }) => {
   return (
     <View style={styles.headerContainer}>
@@ -32,6 +34,11 @@ const CustomHeader = ({
       ) : null}
       <View style={styles.headerTextContainer}>
         <Text style={styles.headerText}>{headerText}</Text>
+        {showCartButton === true ? (
+          <TouchableOpacity style={styles.headerText} onPress={goToCartPress}>
+            <TimeIcon name="cart-outline" color={DARK_THEME} size={30} />
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   );
@@ -57,9 +64,10 @@ const styles = StyleSheet.create({
   headerTextContainer: {
     width: windowWidth * 0.8,
     height: windowHeight * 0.08,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignSelf: 'center',
-    //     backgroundColor: 'tomato',
+    // backgroundColor: 'tomato',
     marginRight: 30,
   },
   headerText: {
@@ -67,7 +75,9 @@ const styles = StyleSheet.create({
     fontFamily: Helvetica_Neue_Heavy,
     color: DARK_THEME,
     textAlignVertical: 'center',
-    textAlign: 'left',
+    // textAlign: 'left',
+    // backgroundColor: 'green',
+    alignSelf: 'center',
   },
 });
 

@@ -12,4 +12,5 @@ export default {
   RestPassword: 'RestPassword',
   OrderHistory: 'OrderHistory',
   Signup: 'Signup',
+  ProductBrands: 'ProductBrands',
 };

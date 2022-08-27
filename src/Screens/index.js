@@ -11,3 +11,4 @@ export {default as FullMapView} from './FullMapView/index';
 export {default as RestPassword} from './RestPassword/index';
 export {default as OrderHistory} from './OrderHistory/index';
 export {default as Signup} from './Signup/index';
+export {default as ProductsBrands} from './ProductsBrands/index';

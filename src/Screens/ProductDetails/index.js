@@ -70,6 +70,10 @@ const ProductDetails = ({navigation, route}) => {
     navigation.goBack();
   };
 
+  const goToCart = () => {
+    navigation.navigate(NavigationStrings.Cart);
+  };
+
   const navigateTocart = () => {
     setTimeout(() => {
       navigation.navigate(NavigationStrings.Cart);
@@ -84,6 +88,10 @@ const ProductDetails = ({navigation, route}) => {
         showBackIconColor={DARK_THEME}
         onPressCustom={() => {
           back();
+        }}
+        showCartButton={true}
+        goToCartPress={() => {
+          goToCart();
         }}
       />
       {/* headerend */}

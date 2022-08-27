@@ -62,7 +62,9 @@ const Checkout = props => {
   const navigateToSignup = () => {
     props.navigation.navigate(NavigationStrings.Signup);
   };
-
+  const goToCart = () => {
+    props.navigation.navigate(NavigationStrings.Cart);
+  };
   const navigateToCards = () => {
     props.navigation.navigate(NavigationStrings.Cards);
   };
@@ -150,6 +152,10 @@ const Checkout = props => {
         showBackIconColor={DARK_THEME}
         onPressCustom={() => {
           back();
+        }}
+        showCartButton={true}
+        goToCartPress={() => {
+          goToCart();
         }}
       />
       {/*  */}
