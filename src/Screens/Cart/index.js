@@ -9,7 +9,7 @@ import NavigationStrings from '../../../Navigation/NavigationStrings';
 import CustomHeader from '../../Components/CustomHeader';
 import {useSelector, useDispatch} from 'react-redux';
 import Svg, {Path, Circle} from 'react-native-svg';
-import CartImage from '../../Images/cartImage.png';
+import CartImage from '../../Images/cart_logo_image.png';
 import styles from './styles';
 import {
   calculateTotals,
