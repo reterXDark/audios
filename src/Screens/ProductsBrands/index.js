@@ -194,9 +194,9 @@ const ProductsBrands = props => {
           style={styles.customButton}
           activeOpacity={0.5}
           onPress={() => {
-            props.navigation.navigate(NavigationStrings.Cart);
+            props.navigation.goBack();
           }}>
-          <Text style={styles.customButtonText}>Go to Cart</Text>
+          <Text style={styles.customButtonText}>Back</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
