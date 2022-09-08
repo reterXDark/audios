@@ -160,7 +160,7 @@ const ProductDetails = ({navigation, route}) => {
           </View>
         </View>
 
-        <View style={styles.breaker} />
+        {/* <View style={styles.breaker} /> */}
 
         {/* <View style={styles.brandTypeContainer}>
           <TouchableOpacity activeOpacity={0.5} style={styles.brandType1}>

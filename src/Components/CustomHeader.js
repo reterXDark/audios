@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,10 +8,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import TimeIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useDispatch, useSelector} from 'react-redux';
+import {calculateTotals, totalItemsInCart} from '../../features/cart/cartSlice';
 import {
   DARK_THEME,
+  Helvetica_Neue_BoldCondensed,
   Helvetica_Neue_Heavy,
+  Helvetica_Neue_Light,
+  Helvetica_Neue_Regular,
   LIGHT_THEME,
+  PRIMARY_PURPLE,
 } from '../helper/commonStyle';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -23,6 +30,14 @@ const CustomHeader = ({
   showCartButton,
   goToCartPress,
 }) => {
+  const {cartItems, amount, total} = useSelector(store => store.cart);
+  console.log(cartItems);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(calculateTotals());
+  }, [cartItems]);
   return (
     <View style={styles.headerContainer}>
       {showBackIcon === true ? (
@@ -36,6 +51,7 @@ const CustomHeader = ({
         <Text style={styles.headerText}>{headerText}</Text>
         {showCartButton === true ? (
           <TouchableOpacity style={styles.headerText} onPress={goToCartPress}>
+            <Text style={styles.cartTotaliconText}>{cartItems.length}</Text>
             <TimeIcon name="cart-outline" color={DARK_THEME} size={30} />
           </TouchableOpacity>
         ) : null}
@@ -78,6 +94,22 @@ const styles = StyleSheet.create({
     // textAlign: 'left',
     // backgroundColor: 'green',
     alignSelf: 'center',
+  },
+  cartTotaliconText: {
+    backgroundColor: PRIMARY_PURPLE,
+    textAlign: 'center',
+    height: 20,
+    width: 20,
+    position: 'absolute',
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: LIGHT_THEME,
+    left: 20,
+    bottom: 20,
+    fontFamily: Helvetica_Neue_BoldCondensed,
+    textAlignVertical: 'center',
+    fontSize: 12,
   },
 });
 

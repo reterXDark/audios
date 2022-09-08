@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DADADA',
     width: windowWidth * 0.85,
     height: 1,
-    marginTop: windowHeight * 0.02,
+    // marginTop: windowHeight * 0.02,
     alignSelf: 'center',
   },
   totalPriceContainer: {

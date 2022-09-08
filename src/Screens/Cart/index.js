@@ -94,7 +94,7 @@ const Cart = ({navigation}, props) => {
                     </View>
                   </View>
                   {/*  */}
-                  <View style={styles.brandTypeContainer}>
+                  {/* <View style={styles.brandTypeContainer}>
                     <TouchableOpacity
                       activeOpacity={0.5}
                       style={styles.brandType1}>
@@ -113,7 +113,7 @@ const Cart = ({navigation}, props) => {
                       <Text style={styles.brandNameText}>Brand 3</Text>
                       <Text style={styles.brandPriceText}>$ 400</Text>
                     </TouchableOpacity>
-                  </View>
+                  </View> */}
                   {/*  */}
                   <View style={styles.breaker} />
                   {/*  Total Price container */}
@@ -122,7 +122,7 @@ const Cart = ({navigation}, props) => {
                       <Text style={styles.totalPriceText}>Total price</Text>
                     </View>
                     <View style={styles.priceContainer}>
-                      <Text style={styles.PriceText}>{price}</Text>
+                      <Text style={styles.PriceText}>{`$ ${price}`}</Text>
                       <View style={styles.counterContainer}>
                         <TouchableOpacity
                           activeOpacity={0.5}
@@ -195,6 +195,15 @@ const Cart = ({navigation}, props) => {
               // dispatch(clearTheCart());
             }}>
             <Text style={styles.customButtonText}>Proceed to Checkout</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.customButton}
+            activeOpacity={0.5}
+            onPress={() => {
+              navigation.navigate(NavigationStrings.Products);
+              // dispatch(clearTheCart());
+            }}>
+            <Text style={styles.customButtonText}>Go Back Shopping</Text>
           </TouchableOpacity>
         </ScrollView>
       ) : (

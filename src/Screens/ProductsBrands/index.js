@@ -17,7 +17,7 @@ const individualpackagesData = [
     price: 80,
     SpeakerImage:
       'https://firebasestorage.googleapis.com/v0/b/audio-74b54.appspot.com/o/cartImage.jpg?alt=media&token=8d9747f9-d682-4a01-b3f4-1e91a7827222',
-    quantity: 0,
+    quantity: 1,
     // Brand_1: {Name1: 'Brand 1', Bquantity1: 6, Bprice1: 500},
     // Brand_2: {Name2: 'Brand 2', Bquantity2: 8, Bprice2: 200},
     // Brand_3: {Name3: 'Brand 3', Bquantity3: 9, Bprice3: 400},
@@ -29,7 +29,7 @@ const individualpackagesData = [
     price: 50,
     SpeakerImage:
       'https://firebasestorage.googleapis.com/v0/b/audio-74b54.appspot.com/o/cartImage.jpg?alt=media&token=8d9747f9-d682-4a01-b3f4-1e91a7827222',
-    quantity: 0,
+    quantity: 1,
     // Brand_1: {Name1: 'Brand 1', Bquantity1: 6, Bprice1: 500},
     // Brand_2: {Name2: 'Brand 2', Bquantity2: 8, Bprice2: 200},
     // Brand_3: {Name3: 'Brand 3', Bquantity3: 9, Bprice3: 400},
@@ -41,7 +41,7 @@ const individualpackagesData = [
     price: 20,
     SpeakerImage:
       'https://firebasestorage.googleapis.com/v0/b/audio-74b54.appspot.com/o/cartImage.jpg?alt=media&token=8d9747f9-d682-4a01-b3f4-1e91a7827222',
-    quantity: 0,
+    quantity: 1,
     // Brand_1: {Name1: 'Brand 1', Bquantity1: 6, Bprice1: 500},
     // Brand_2: {Name2: 'Brand 2', Bquantity2: 8, Bprice2: 200},
     // Brand_3: {Name3: 'Brand 3', Bquantity3: 9, Bprice3: 400},

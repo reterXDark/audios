@@ -165,9 +165,9 @@ const styles = StyleSheet.create({
     marginTop: windowHeight * 0.05,
   },
   quantityContainer: {
-    //     backgroundColor: 'tomato',
+    // backgroundColor: 'tomato',
     width: windowWidth * 0.9,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
     margin: 10,

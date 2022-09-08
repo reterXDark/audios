@@ -63,6 +63,6 @@ export const {
   removeItem,
 } = cartSlice.actions;
 
-export const totalAmountofCart = () => cartItems.length;
+// export const totalAmountofCart = () => cartItems.length;
 
 export default cartSlice.reducer;

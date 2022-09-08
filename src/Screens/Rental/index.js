@@ -33,7 +33,6 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import MapView, {Callout, Circle, Marker} from 'react-native-maps';
 import {TotalCart} from '../../../features/cart/cartSlice';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import CheckBox from '@react-native-community/checkbox/dist/CheckBox.android';
 
 const mapDarkStyle = [
   {
@@ -329,7 +328,6 @@ const Rental = props => {
   const [DropoffCity, setDropoffCity] = useState(null);
   const [isEnabled, setIsEnabled] = useState(false);
   const [DbbColor, setDbbColor] = useState(true);
-  const [PbbColor, setPbbColor] = useState(false);
 
   const sheetRef = useRef();
   const sheet2Ref = useRef();
@@ -372,8 +370,6 @@ const Rental = props => {
       value: 'Italy',
     },
   ];
-
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const renderPickupContent = () => (
     <View style={styles.PickupCityBottomSheetContinaer}>
@@ -646,30 +642,11 @@ const Rental = props => {
             <Text
               style={[
                 styles.pickupOptionText,
-                {
-                  borderBottomColor: DbbColor ? PRIMARY_PURPLE : LIGHT_THEME,
-                  color: DbbColor ? DARK_THEME : DISABLED,
-                },
+                {borderBottomColor: DbbColor ? PRIMARY_PURPLE : LIGHT_THEME},
               ]}
               onPress={() => {
                 setDbbColor(true);
                 setPbbColor(false);
-              }}>
-              Pickup
-            </Text>
-          </View>
-          <View style={styles.pickupOptionContainer}>
-            <Text
-              style={[
-                styles.pickupOptionText,
-                {
-                  borderBottomColor: PbbColor ? PRIMARY_PURPLE : LIGHT_THEME,
-                  color: PbbColor ? DARK_THEME : DISABLED,
-                },
-              ]}
-              onPress={() => {
-                setDbbColor(false);
-                setPbbColor(true);
               }}>
               Delivery
             </Text>
@@ -689,10 +666,9 @@ const Rental = props => {
 
         <ScrollView contentContainerStyle={styles.scrollViewInfo} scrollEnabled>
           <View style={styles.rentalInformationContainer}>
-            {/*  */}
             <View style={styles.labelAndInputContainer}>
               <View style={styles.inputLabelTextContainer}>
-                <Text style={styles.labelText}>Pickup Date</Text>
+                <Text style={styles.labelText}>Delivery Date</Text>
               </View>
               <View style={styles.inputContainer}>
                 <TextInput
@@ -768,7 +744,7 @@ const Rental = props => {
             {/*  */}
             <View style={styles.labelAndInputContainer}>
               <View style={styles.inputLabelTextContainer}>
-                <Text style={styles.labelText}>Pickup City</Text>
+                <Text style={styles.labelText}>Delivery City</Text>
               </View>
               <View style={styles.inputContainer}>
                 <Dropdown
@@ -801,7 +777,7 @@ const Rental = props => {
             {/*  */}
             <View style={styles.labelAndInputContainer}>
               <View style={styles.inputLabelTextContainer}>
-                <Text style={styles.labelText}>Pickup Store</Text>
+                <Text style={styles.labelText}>Delivery Location</Text>
               </View>
               <View style={styles.inputContainer}>
                 <TextInput
@@ -863,19 +839,6 @@ const Rental = props => {
                 </TouchableOpacity>
               </View>
             </View>
-            {/*  */}
-            <View style={styles.deliveryInfoStyles}>
-              <CheckBox
-                disabled={false}
-                value={toggleCheckBox}
-                tintColors={toggleCheckBox ? PRIMARY_PURPLE : DISABLED}
-                onValueChange={newValue => setToggleCheckBox(newValue)}
-              />
-              <Text style={styles.deliveryInfoStylesText}>
-                Save this Address for future use
-              </Text>
-            </View>
-            {/*  */}
           </View>
           <TouchableOpacity
             style={styles.customButton}
