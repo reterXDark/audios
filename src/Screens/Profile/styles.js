@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'green',
     width: windowWidth * 0.9,
     height: windowHeight * 0.085,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
   inputLabelContainer: {
     // backgroundColor: 'gold',
