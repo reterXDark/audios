@@ -86,11 +86,11 @@ const Cart = ({navigation}, props) => {
                           {packageName}
                         </Text>
                       </View>
-                      <View style={styles.productDescTextContainer}>
+                      {/* <View style={styles.productDescTextContainer}>
                         <Text style={styles.productDescText}>
                           {packageDescription}
                         </Text>
-                      </View>
+                      </View> */}
                     </View>
                   </View>
                   {/*  */}

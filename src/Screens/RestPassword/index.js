@@ -6,6 +6,7 @@ import {DARK_THEME} from '../../helper/commonStyle';
 import Modal from 'react-native-modal';
 import {Controller, useForm} from 'react-hook-form';
 import styles from './styles';
+import {firebase} from '@react-native-firebase/auth';
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -25,6 +26,7 @@ const RestPassword = props => {
   const Back = () => {
     props.navigation.goBack();
   };
+
   return (
     <View style={styles.container}>
       <CustomHeader

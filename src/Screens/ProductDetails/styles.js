@@ -230,6 +230,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     elevation: 3,
   },
+  customButton2: {
+    backgroundColor: DARK_THEME,
+    height: windowHeight * 0.07,
+    width: windowWidth * 0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 100,
+    marginTop: windowHeight * 0.03,
+    alignSelf: 'center',
+    elevation: 3,
+  },
   customButtonText: {
     fontFamily: Helvetica_Neue_Medium,
     color: LIGHT_THEME,
@@ -243,8 +254,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'tomato',
     height: windowHeight * 0.5,
     width: windowWidth * 0.95,
-    marginBottom: windowHeight * 0.05,
-    marginTop: windowHeight * 0.03,
+    marginBottom: windowHeight * 0.15,
+    marginTop: windowHeight * 0.02,
   },
   userReviewContainer: {
     // backgroundColor: 'tomato',
@@ -370,6 +381,22 @@ const styles = StyleSheet.create({
   ratedStyles: {
     backgroundColor: 'tomato',
     marginRight: 320,
+  },
+  writeReviewInputContainer: {
+    // backgroundColor: 'tomato',
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.1,
+    alignSelf: 'center',
+    marginTop: windowHeight * 0.03,
+    borderRadius: 5,
+    paddingHorizontal: 5,
+    borderWidth: 0.2,
+    borderColor: DISABLED,
+    alignItems: 'flex-start',
+    justifyContent: 'space-evenly',
+  },
+  writeReviewInput: {
+    color: DARK_THEME,
   },
 });
 

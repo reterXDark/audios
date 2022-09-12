@@ -16,6 +16,7 @@ import styles from './styles';
 import CustomHeader from '../../Components/CustomHeader';
 import {DARK_THEME} from '../../helper/commonStyle';
 import NavigationStrings from '../../../Navigation/NavigationStrings';
+import PickupDetailsHeadline from '../../Components/PickupDetailsHeadline';
 
 const Receipt = (props, {navigation}) => {
   useEffect(() => {
@@ -111,22 +112,7 @@ const Receipt = (props, {navigation}) => {
                 </View>
               </View>
               {/* Pickup & Dropoff Location */}
-              <View style={styles.pickupDropoffLocationContainer}>
-                <View style={styles.locationTextContainers}>
-                  <Text style={styles.locationText}>
-                    Pickup & Dropoff Location
-                  </Text>
-                </View>
-                <View style={styles.locationNameContainer}>
-                  <Text style={styles.locationNameText}>AAA Audios</Text>
-                </View>
-                <View style={styles.addressTextContainer}>
-                  <Text style={styles.addressText}>
-                    375 East Ave, SF, CA 94111 {'\n'}Phone Numer: 415 000 0000
-                    {'\n'}Business Hours: 11am - 7pm
-                  </Text>
-                </View>
-              </View>
+              <PickupDetailsHeadline />
               {/* Map View */}
               <Pressable
                 style={styles.mapViewContainer}

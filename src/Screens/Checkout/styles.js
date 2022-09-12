@@ -142,6 +142,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'tomato',
     marginTop: windowHeight * 0.02,
     width: windowWidth * 0.9,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   heading: {
     fontFamily: Helvetica_Neue_Medium,

@@ -1,11 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import TimeIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CustomHeader from '../../Components/CustomHeader';
 import {DARK_THEME} from '../../helper/commonStyle';
+import auth, {firebase} from '@react-native-firebase/auth';
 import styles from './styles';
+import NavigationStrings from '../../../Navigation/NavigationStrings';
 
 const Profile = props => {
+  const [fireBAuthCheck, setfireBAuthCheck] = useState('');
+
+  // getting User State
+  const currentAuthState = async () => {
+    auth().onAuthStateChanged(user => {
+      if (user) {
+        let userEmail = user.email;
+        let userName = user.uid;
+        console.log(userEmail);
+        console.log(userName);
+
+        setfireBAuthCheck(userEmail);
+        // ...
+      } else {
+        setfireBAuthCheck(null);
+      }
+    });
+  };
+
+  useEffect(() => {
+    currentAuthState();
+  }, [currentAuthState]);
+
   const back = () => {
     props.navigation.goBack();
   };
@@ -59,6 +84,7 @@ const Profile = props => {
               placeholderTextColor={'#737373'}
               style={styles.inputStyle}
               keyboardType={'email-address'}
+              value={fireBAuthCheck}
             />
           </View>
         </View>

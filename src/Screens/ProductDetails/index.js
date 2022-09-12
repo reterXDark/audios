@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import User from 'react-native-vector-icons/FontAwesome5';
 import {Rating} from 'react-native-ratings';
@@ -43,6 +44,7 @@ const ProductDetails = ({navigation, route}) => {
 
   // const [isFocus, setIsFocus] = useState(false);
   const [value, setValue] = useState(quantity);
+  const [EnableReiviewInput, setEnableReiviewInput] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -316,8 +318,40 @@ const ProductDetails = ({navigation, route}) => {
               </Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.customButton} activeOpacity={0.5}>
-            <Text style={styles.customButtonText}>Write a Review</Text>
+
+          {EnableReiviewInput ? (
+            <View style={styles.writeReviewInputContainer}>
+              <View>
+                <Rating
+                  type="star"
+                  ratingCount={6}
+                  imageSize={15}
+                  ratingColor={PRIMARY_PURPLE}
+                  //               showRating
+                  onFinishRating={ratingCompleted}
+                  readonly={false}
+                />
+              </View>
+              <TextInput
+                style={styles.writeReviewInput}
+                placeholder="Write a Review"
+                keyboardType="ascii-capable"
+                placeholderTextColor={DARK_THEME}
+                keyboardAppearance="default"
+              />
+            </View>
+          ) : (
+            <></>
+          )}
+          <TouchableOpacity
+            style={styles.customButton2}
+            onPress={() => {
+              setEnableReiviewInput(!EnableReiviewInput);
+            }}
+            activeOpacity={0.5}>
+            <Text style={styles.customButtonText}>
+              {EnableReiviewInput ? 'Done' : 'Write a Review'}
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

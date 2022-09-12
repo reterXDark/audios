@@ -104,6 +104,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     elevation: 3,
   },
+  customLogutButton: {
+    backgroundColor: 'red',
+    height: windowHeight * 0.07,
+    width: windowWidth * 0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 100,
+    marginTop: windowHeight * 0.04,
+    alignSelf: 'center',
+    elevation: 3,
+  },
   customButtonText: {
     fontFamily: Helvetica_Neue_Medium,
     color: LIGHT_THEME,

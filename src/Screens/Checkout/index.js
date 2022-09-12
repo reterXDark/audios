@@ -13,8 +13,7 @@ import EditIcon from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import Caret from 'react-native-vector-icons/Ionicons';
 import CheckBox from '@react-native-community/checkbox';
-import auth from '@react-native-firebase/auth';
-// import {getAuth, onAuthStateChanged} from 'firebase/auth';
+import auth, {firebase} from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 import {Controller, useForm} from 'react-hook-form';
 import {
@@ -27,8 +26,7 @@ import styles from './styles';
 import CustomHeader from '../../Components/CustomHeader';
 import NavigationStrings from '../../../Navigation/NavigationStrings';
 import CancelButtonIcon from 'react-native-vector-icons/MaterialIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useStripe} from '@stripe/stripe-react-native';
+import PickupDetailsHeadline from '../../Components/PickupDetailsHeadline';
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -159,26 +157,30 @@ const Checkout = props => {
         }}
       />
       {/*  */}
-      <View style={styles.pickupDetails}>
-        <View style={styles.upperTextContainer}>
-          <Text style={styles.upperText}>Pickup</Text>
-        </View>
-        <View style={styles.lowerTextContainer}>
-          <Text style={styles.lowerText}>
-            AAA Audios {'  '}Oct 10 - Oct 12 {'  '}09:00
-          </Text>
-          <TouchableOpacity activeOpacity={0.5} style={{marginRight: 20}}>
-            <EditIcon name="mode-edit" color={LIGHT_THEME} size={20} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
+      <PickupDetailsHeadline />
       {/*  */}
       <ScrollView contentContainerStyle={styles.scrollContainer} scrollEnabled>
         {/*  */}
         <View style={styles.headingContainer}>
           <Text style={styles.heading}>Contact </Text>
+          {fireBAuthCheck !== null ? (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                try {
+                  firebase.auth().signOut();
+                  // props.navigation.replace(NavigationStrings.Products);
+                } catch (error) {
+                  console.log('Please Login', error);
+                }
+              }}>
+              <TimeIcon name="logout" color={DARK_THEME} size={30} />
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
         </View>
+
         {/* Check User State here! */}
         {fireBAuthCheck !== null ? (
           <View style={styles.isignupCheckContainer}>
@@ -374,7 +376,7 @@ const Checkout = props => {
           style={[
             styles.isignupCheckContainer,
             fireBAuthCheck !== null
-              ? {backgroundColor: DARK_THEME}
+              ? {backgroundColor: LIGHT_THEME}
               : {backgroundColor: LIGHT_THEME},
           ]}
           disabled={fireBAuthCheck !== null ? false : true}
