@@ -371,10 +371,21 @@ const Checkout = props => {
           <Text style={styles.heading}>Payment</Text>
         </View>
         <TouchableOpacity
-          style={styles.isignupCheckContainer}
+          style={[
+            styles.isignupCheckContainer,
+            fireBAuthCheck !== null
+              ? {backgroundColor: DARK_THEME}
+              : {backgroundColor: LIGHT_THEME},
+          ]}
+          disabled={fireBAuthCheck !== null ? false : true}
+          onPress={() => {
+            navigateToCards();
+          }}
           activeOpacity={0.85}>
           <Text style={styles.stylesisignupCheckText}>
-            Select a payment method
+            {fireBAuthCheck !== null
+              ? 'Select a payment method'
+              : 'Please Signin to select card'}
           </Text>
           <Caret name="caret-forward-sharp" size={20} color={DARK_THEME} />
         </TouchableOpacity>

@@ -33,6 +33,7 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import MapView, {Callout, Circle, Marker} from 'react-native-maps';
 import {TotalCart} from '../../../features/cart/cartSlice';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const mapDarkStyle = [
   {
@@ -277,6 +278,7 @@ const Rental = props => {
   const [mode, setMode] = useState('date');
   const [showPickupDTP, setShowPickupDTP] = useState(false);
   const [text, settext] = useState('');
+  const [DeleviveryLocationName, setDeleviveryLocationName] = useState('');
 
   const showMode = currentMode => {
     setShowPickupDTP(true);
@@ -321,18 +323,12 @@ const Rental = props => {
     settext1(`${fDate1}, ${fTime1}`);
     console.log(fDate1);
   };
-  // scsc
-  const [isFocus, setIsFocus] = useState(false);
-  const [value, setValue] = useState(null);
-  const [isFocus1, setIsFocus1] = useState(false);
-  const [DropoffCity, setDropoffCity] = useState(null);
+
   const [isEnabled, setIsEnabled] = useState(false);
   const [DbbColor, setDbbColor] = useState(true);
 
   const sheetRef = useRef();
-  const sheet2Ref = useRef();
   const fall = new Animated.Value(1);
-  const fall2 = new Animated.Value(1);
 
   const [Pickupregion, setPickupregion] = useState({
     latitude: 37.137615,
@@ -346,30 +342,16 @@ const Rental = props => {
     longitude: -95.74037,
   });
 
-  const [Dropoffregion, setDroppoffregion] = useState({
-    latitude: 37.137615,
-    longitude: -95.74037,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
-
-  const [DropoffregionPin, setDropoffregionPin] = useState({
-    latitude: 37.137615,
-    longitude: -95.74037,
-  });
+  const storeLocationData = async value => {
+    console.log('hust run');
+    try {
+      await AsyncStorage.setItem('dev_location', value);
+    } catch (e) {
+      // console.error('Error on Storing Location ', e);
+    }
+  };
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-  const data = [
-    {
-      label: 'France',
-      value: 'France',
-    },
-    {
-      label: 'Italy',
-      value: 'Italy',
-    },
-  ];
 
   const renderPickupContent = () => (
     <View style={styles.PickupCityBottomSheetContinaer}>
@@ -400,6 +382,10 @@ const Rental = props => {
             latitude: details.geometry.location.lat,
             longitude: details.geometry.location.lng,
           });
+          setDeleviveryLocationName(
+            `${details.name},${details.formatted_address}`,
+          );
+          setDeleviveryLocationName(details.name);
           console.log('Region after Select the Place: ', PickupregionPin);
           console.log(details);
         }}
@@ -471,98 +457,6 @@ const Rental = props => {
       </MapView>
     </View>
   );
-  const renderDropoffContent = () => (
-    <View style={styles.PickupCityBottomSheetContinaer}>
-      <GooglePlacesAutocomplete
-        textInputProps={{
-          placeholderTextColor: DISABLED,
-          focusable: true,
-          style: {
-            color: '#000',
-            width: '75%',
-            backgroundColor: '#fff',
-            alignSelf: 'center',
-          },
-        }}
-        placeholder="Enter an address"
-        fetchDetails={true}
-        GooglePlacesSearchQuery={{
-          rankby: 'distance',
-        }}
-        onPress={(data, details) => {
-          setDropoffregionPin({
-            latitude: details.geometry.location.lat,
-            longitude: details.geometry.location.lng,
-          });
-          console.log('Region after Select the Place: ', DropoffregionPin);
-        }}
-        query={{
-          key: 'AIzaSyCgTXTy8JDUtqsYi9KHoA4rE7jBmaD0MSA',
-          language: 'en',
-          components: 'country:US',
-          types: 'address',
-          // radius: 30000,
-          location: `${Dropoffregion.latitude}, ${Dropoffregion.longitude}`,
-        }}
-        styles={{
-          container: styles.placesSuperContainer,
-          listView: styles.listViewStyles,
-          description: styles.descriptionStyles,
-          textInputContainer: styles.textInputContainerStyles,
-        }}
-        renderRightButton={() => {
-          return (
-            <View style={styles.renderRightButtonStyles}>
-              <Search name="search" size={20} color={DISABLED} />
-            </View>
-          );
-        }}
-      />
-      {false && (
-        <View style={styles.selectedLocationContainer}>
-          <View style={styles.addressContainer}>
-            <Text style={styles.addressNameText}>AAA Audios</Text>
-            <Text style={styles.addressText}>375 East Ave, SF, CA 94111</Text>
-            <Text style={styles.addressDistance}>1.2 miles away</Text>
-            <Text style={styles.addressContact}>Phone Numer: 415 000 0000</Text>
-            <Text style={styles.addressBHours}>Business Hours: 11am - 7pm</Text>
-          </View>
-          <TouchableOpacity
-            style={styles.selecteAddressButton}
-            activeOpacity={0.7}>
-            <Text style={styles.selectButtonText}>Select</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      <MapView
-        style={styles.map}
-        customMapStyle={colorScheme === 'dark' ? mapDarkStyle : mapLightStyle}
-        showsCompass={true}
-        mapType={'standard'}
-        showsBuildings={true}
-        showsUserLocation={true}
-        zoomEnabled={true}
-        zoomControlEnabled={true}
-        initialRegion={Pickupregion}>
-        <Marker
-          key={'PICKUP_MAP_MARKER'}
-          title="Dropoff Location"
-          description="This is a Description"
-          coordinate={DropoffregionPin}
-          identifier={'mark1'}
-          image={Customamrk}
-          draggable={true}
-          // centerOffset={{x: 0, y: 0}}
-          // onDragStart={e => {
-          // }}
-          onDragEnd={e => {
-            DropoffregionPin(e.nativeEvent.coordinate);
-            console.log('Drag start', PickupregionPin);
-          }}
-        />
-      </MapView>
-    </View>
-  );
 
   const renderPickupHeader = () => (
     <View
@@ -580,42 +474,9 @@ const Rental = props => {
       <Text style={styles.bottomSheetHeaderText}>Pickup at</Text>
     </View>
   );
-  const renderDropoffHeader = () => (
-    <View
-      style={{
-        backgroundColor: DARK_THEME,
-        width: '100%',
-        height: 50,
-        // position: 'absolute',
-        alignSelf: 'center',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      <Text style={styles.bottomSheetHeaderText}>Dropoff at</Text>
-    </View>
-  );
 
   const renderPickupShadow = () => {
     const animatedShadowOpacity = Animated.interpolateNode(fall, {
-      inputRange: [0, 1],
-      outputRange: [0.5, 0],
-    });
-    return (
-      <Animated.View
-        pointerEvents="none"
-        style={[
-          styles.shadowContainer,
-          {
-            opacity: animatedShadowOpacity,
-          },
-        ]}
-      />
-    );
-  };
-  const renderDropoffShadow = () => {
-    const animatedShadowOpacity = Animated.interpolateNode(fall2, {
       inputRange: [0, 1],
       outputRange: [0.5, 0],
     });
@@ -653,7 +514,7 @@ const Rental = props => {
           </View>
         </View>
         {/* switch */}
-        <View style={styles.pickupswitchContainer}>
+        {/* <View style={styles.pickupswitchContainer}>
           <Switch
             trackColor={{false: '#DADADA', true: '#DADADA'}}
             thumbColor={isEnabled ? PRIMARY_PURPLE : DARK_THEME}
@@ -662,7 +523,7 @@ const Rental = props => {
             value={isEnabled}
           />
           <Text style={styles.pickupswitchText}>Different return location</Text>
-        </View>
+        </View> */}
 
         <ScrollView contentContainerStyle={styles.scrollViewInfo} scrollEnabled>
           <View style={styles.rentalInformationContainer}>
@@ -682,11 +543,19 @@ const Rental = props => {
                 />
                 <View style={styles.inputIconContainer}>
                   <TimeIcon
-                    name="clock-time-four-outline"
+                    name="calendar-month-outline"
                     size={20}
                     color="#000"
                     onPress={() => {
                       showMode('date');
+                    }}
+                  />
+                  <TimeIcon
+                    name="clock-time-four-outline"
+                    size={20}
+                    color="#000"
+                    onPress={() => {
+                      showMode('time');
                     }}
                   />
                 </View>
@@ -720,11 +589,19 @@ const Rental = props => {
                 />
                 <View style={styles.inputIconContainer}>
                   <TimeIcon
-                    name="clock-time-four-outline"
+                    name="calendar-month-outline"
                     size={20}
                     color="#000"
                     onPress={() => {
                       showMode1('date');
+                    }}
+                  />
+                  <TimeIcon
+                    name="clock-time-four-outline"
+                    size={20}
+                    color="#000"
+                    onPress={() => {
+                      showMode1('time');
                     }}
                   />
                 </View>
@@ -741,39 +618,7 @@ const Rental = props => {
                 is24Hour={false}
               />
             )}
-            {/*  */}
-            <View style={styles.labelAndInputContainer}>
-              <View style={styles.inputLabelTextContainer}>
-                <Text style={styles.labelText}>Delivery City</Text>
-              </View>
-              <View style={styles.inputContainer}>
-                <Dropdown
-                  style={[styles.dropdown]}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  autoScroll
-                  // disable
-                  // inputSearchStyle={styles.inputSearchStyle}
-                  iconStyle={styles.iconStyle}
-                  containerStyle={styles.containerrrrStyle}
-                  data={data}
-                  // search
-                  maxHeight={120}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={!isFocus ? 'Choose a City' : '...'}
-                  // searchPlaceholder="Search..."
-                  value={value}
-                  showsVerticalScrollIndicator={false}
-                  onFocus={() => setIsFocus(true)}
-                  onBlur={() => setIsFocus(false)}
-                  onChange={item => {
-                    setValue(item.value);
-                    setIsFocus(false);
-                  }}
-                />
-              </View>
-            </View>
+
             {/*  */}
             <View style={styles.labelAndInputContainer}>
               <View style={styles.inputLabelTextContainer}>
@@ -784,66 +629,23 @@ const Rental = props => {
                   placeholder="Locate nearby stores"
                   placeholderTextColor={'#737373'}
                   style={styles.inputStyle}
+                  value={DeleviveryLocationName}
                 />
                 <TouchableOpacity
-                  style={styles.inputIconContainer}
+                  style={styles.inputIconContainer1}
                   onPress={() => sheetRef.current.snapTo(0)}>
                   <TimeIcon name="map" size={20} color="#000" />
                 </TouchableOpacity>
               </View>
             </View>
             {/*  */}
-            <View style={styles.labelAndInputContainer}>
-              <View style={styles.inputLabelTextContainer}>
-                <Text style={styles.labelText}>Dropoff City</Text>
-              </View>
-              <View style={styles.inputContainer}>
-                <Dropdown
-                  style={[styles.dropdown]}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  autoScroll
-                  iconStyle={styles.iconStyle}
-                  containerStyle={styles.containerrrrStyle}
-                  data={data}
-                  maxHeight={120}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={!isFocus ? 'Choose a City' : '...'}
-                  value={DropoffCity}
-                  showsVerticalScrollIndicator={false}
-                  onFocus={() => setIsFocus1(true)}
-                  onBlur={() => setIsFocus1(false)}
-                  onChange={item => {
-                    setDropoffCity(item.value);
-                    setIsFocus1(false);
-                  }}
-                />
-              </View>
-            </View>
-            {/*  */}
-            <View style={styles.labelAndInputContainer}>
-              <View style={styles.inputLabelTextContainer}>
-                <Text style={styles.labelText}>Dropoff Store</Text>
-              </View>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder="Locate nearby stores"
-                  placeholderTextColor={'#737373'}
-                  style={styles.inputStyle}
-                />
-                <TouchableOpacity
-                  style={styles.inputIconContainer}
-                  onPress={() => sheet2Ref.current.snapTo(0)}>
-                  <TimeIcon name="map" size={20} color="#000" />
-                </TouchableOpacity>
-              </View>
-            </View>
           </View>
           <TouchableOpacity
             style={styles.customButton}
             activeOpacity={0.5}
-            onPress={() => {}}>
+            onPress={() => {
+              storeLocationData(DeleviveryLocationName);
+            }}>
             <Text style={styles.customButtonText}>Select Equipment</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -860,19 +662,6 @@ const Rental = props => {
         enabledHeaderGestureInteraction={true}
         renderContent={renderPickupContent}
         renderHeader={renderPickupHeader}
-      />
-      {renderDropoffShadow()}
-      <DropOffCityBottomSheet
-        ref={sheet2Ref}
-        snapPoints={[500, 400, 0]}
-        initialSnap={2}
-        borderRadius={20}
-        callbackNode={fall2}
-        enabledContentGestureInteraction={false}
-        enabledGestureInteraction={true}
-        enabledHeaderGestureInteraction={true}
-        renderContent={renderDropoffContent}
-        renderHeader={renderDropoffHeader}
       />
     </GestureHandlerRootView>
   );

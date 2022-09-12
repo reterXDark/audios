@@ -8,16 +8,24 @@ import {
 import React, {useState} from 'react';
 import EditIcon from 'react-native-vector-icons/MaterialIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import TimeIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   DARK_THEME,
   Helvetica_Neue_BoldCondensed,
   Helvetica_Neue_Medium,
   LIGHT_THEME,
 } from '../helper/commonStyle';
+import {useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const PickupDetailsHeadline = () => {
+  const [DevlocationDATA, setDevlocationDATA] = useState(
+    'AAA Audios, Street 15',
+  );
+
   /*Date Function and states*/
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -43,15 +51,31 @@ const PickupDetailsHeadline = () => {
     console.log(fDate);
   };
 
+  const getLocationData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('dev_location');
+      if (value !== null) {
+        setDevlocationDATA(value);
+        // console.warn('Success Getting Location Data', value);
+      }
+    } catch (e) {
+      // console.error('Error getting Location Data', e);
+    }
+  };
+
+  useEffect(() => {
+    getLocationData();
+  }, []);
+
   return (
     <View style={styles.pickupDetails}>
       <View style={styles.upperTextContainer}>
         <Text style={styles.upperText}>Pickup</Text>
       </View>
       <View style={styles.lowerTextContainer}>
-        <Text style={styles.lowerText}>{`AAA Audios  ${text} `}</Text>
-        <TouchableOpacity
-          activeOpacity={0.1}
+        <Text style={styles.lowerText}>{DevlocationDATA}</Text>
+        <Text style={styles.lowerText}>{`${text}`}</Text>
+        <View
           style={{marginRight: 20}}
           onPress={() => {
             setMode('date');
@@ -68,8 +92,29 @@ const PickupDetailsHeadline = () => {
               is24Hour={false}
             />
           )}
-          <EditIcon name="mode-edit" color={LIGHT_THEME} size={20} />
-        </TouchableOpacity>
+          <View style={styles.inputIconContainer}>
+            <TouchableOpacity activeOpacity={0.6}>
+              <TimeIcon
+                name="calendar-month-outline"
+                size={20}
+                color={LIGHT_THEME}
+                onPress={() => {
+                  showMode('date');
+                }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.6}>
+              <TimeIcon
+                name="clock-time-four-outline"
+                size={20}
+                color={LIGHT_THEME}
+                onPress={() => {
+                  showMode('time');
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -116,5 +161,13 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     lineHeight: 20,
     color: LIGHT_THEME,
+  },
+  inputIconContainer: {
+    // backgroundColor: 'tomato',
+    height: 'auto',
+    width: 50,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
 });
