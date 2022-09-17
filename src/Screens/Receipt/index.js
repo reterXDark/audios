@@ -17,13 +17,20 @@ import CustomHeader from '../../Components/CustomHeader';
 import {DARK_THEME} from '../../helper/commonStyle';
 import NavigationStrings from '../../../Navigation/NavigationStrings';
 import PickupDetailsHeadline from '../../Components/PickupDetailsHeadline';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Receipt = (props, {navigation}) => {
+  const {cartItems, amount, total} = useSelector(store => store.cart);
+  console.log(cartItems);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setTimeout(() => {
       props.navigation.navigate(NavigationStrings.OrderHistory);
     }, 3000);
-  }, []);
+    dispatch(calculateTotals());
+  }, [cartItems]);
   const back = () => {
     props.navigation.goBack();
   };
@@ -111,8 +118,6 @@ const Receipt = (props, {navigation}) => {
                   </View>
                 </View>
               </View>
-              {/* Pickup & Dropoff Location */}
-              <PickupDetailsHeadline />
               {/* Map View */}
               <Pressable
                 style={styles.mapViewContainer}
@@ -173,7 +178,7 @@ const Receipt = (props, {navigation}) => {
                 <View style={styles.breaker2} />
                 <View style={styles.subContainer}>
                   <Text style={styles.totalCost}>Total cost:</Text>
-                  <Text style={styles.totalCost}>$ 200</Text>
+                  <Text style={styles.totalCost}>${total}</Text>
                 </View>
               </View>
               {/* End */}
