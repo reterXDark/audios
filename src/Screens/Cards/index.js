@@ -29,8 +29,8 @@ const Cards = props => {
   const [editCancel3, setEditCancel3] = useState(true);
 
   const [cardNumber, setCardNumber] = useState('4242424242424242');
-  const [expiryM, setexpiryM] = useState('mm');
-  const [expiryY, setexpiryY] = useState('yy');
+  const [expiryM, setexpiryM] = useState('MM');
+  const [expiryY, setexpiryY] = useState('YY');
   const [cvc, setcvc] = useState('');
   const [disable, setDisable] = useState(true);
   const [paymentMethodId, setpaymentMethodId] = useState('');
@@ -291,6 +291,7 @@ const Cards = props => {
                 placeholder={'CVC'}
                 placeholderTextColor={DISABLED}
                 style={styles.inputStyle}
+                maxLength={3}
                 value={cvc}
                 onChangeText={text => setcvc(text)}
                 keyboardType="number-pad"

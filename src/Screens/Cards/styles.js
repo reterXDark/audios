@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   textDateContainer: {
-    color: '#000',
+    color: DISABLED,
     fontFamily: Helvetica_Neue_BoldCondensed,
     fontSize: 15,
     paddingVertical: 13,

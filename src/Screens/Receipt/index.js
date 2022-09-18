@@ -18,6 +18,7 @@ import {DARK_THEME} from '../../helper/commonStyle';
 import NavigationStrings from '../../../Navigation/NavigationStrings';
 import PickupDetailsHeadline from '../../Components/PickupDetailsHeadline';
 import {useDispatch, useSelector} from 'react-redux';
+import {calculateTotals} from '../../../features/cart/cartSlice';
 
 const Receipt = (props, {navigation}) => {
   const {cartItems, amount, total} = useSelector(store => store.cart);

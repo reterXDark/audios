@@ -14,6 +14,23 @@ const EMAIL_REGEX =
 const RestPassword = props => {
   const [Email, setEmail] = useState('');
 
+  const sendMail = async () => {
+    await firebase
+      .auth()
+      .sendPasswordResetEmail(Email)
+      .then(() => {
+        // Password reset email sent!
+        console.log('Email Hass Been Send');
+        setAuthModalVisible(!authModalVisible);
+        // ..
+      })
+      .catch(error => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ..
+      });
+  };
+
   const {
     control,
     handleSubmit,
@@ -84,19 +101,20 @@ const RestPassword = props => {
       <TouchableOpacity
         style={styles.customButton}
         activeOpacity={0.5}
-        onPress={handleSubmit()}>
+        onPress={handleSubmit(sendMail)}>
         <Text style={styles.customButtonText}>Send Instruction</Text>
       </TouchableOpacity>
       <Modal animationIn={'slideInUp'} isVisible={authModalVisible}>
         <View style={styles.authModalContainer}>
           <Text style={styles.modalDescription}>
-            Reset password instruction has sent to your email address.
+            {`Reset password instruction has sent to ${Email}`}
           </Text>
           <TouchableOpacity
             style={styles.OkayTextContainer}
             activeOpacity={0.5}
             onPress={() => {
               setAuthModalVisible(!authModalVisible);
+              props.navigation.navigate(NavigationStrings.Checkout);
             }}>
             <Text style={styles.OkayText}>Okay</Text>
           </TouchableOpacity>
