@@ -30,7 +30,13 @@ import Animated from 'react-native-reanimated';
 import PickupCityBottomSheet from 'reanimated-bottom-sheet';
 import DropOffCityBottomSheet from 'reanimated-bottom-sheet';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import MapView, {Callout, Circle, Marker} from 'react-native-maps';
+import MapView, {
+  Callout,
+  Circle,
+  Marker,
+  AnimatedRegion,
+  MarkerAnimated,
+} from 'react-native-maps';
 import {TotalCart} from '../../../features/cart/cartSlice';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -273,6 +279,18 @@ const mapLightStyle = [];
 const colorScheme = Appearance.getColorScheme();
 
 const Rental = props => {
+  const [myMarker, setMyMarker] = useState(null);
+  const mapRef = useRef(null);
+
+  const [coordinate, setCoordinate] = useState(
+    new AnimatedRegion({
+      latitude: 32.5983,
+      longitude: 44.0175,
+      latitudeDelta: 0.012,
+      longitudeDelta: 0.012,
+    }),
+  );
+
   /*Date Function and states*/
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -353,12 +371,32 @@ const Rental = props => {
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+  function animateMarkerAndCamera() {
+    // let newCoordinate = Pickupregion;
+    //camera will position itself to these coordinates.
+    // const newCamera = {
+    //   center: PickupregionPin,
+    //   pitch: 0,
+    //   heading: 0,
+    //   zoom: 15,
+    // };
+
+    if (myMarker) {
+      myMarker.animateMarkerToCoordinate(PickupregionPin, 4000);
+      //camera type, `newCamera`, used inside animateCamera
+      mapRef.current.animateCamera(
+        {center: PickupregionPin, pitch: 0, heading: 0, zoom: 15},
+        {duration: 4000},
+      );
+    }
+  }
+
   const renderPickupContent = () => (
     <View style={styles.PickupCityBottomSheetContinaer}>
       <GooglePlacesAutocomplete
         nearbyPlacesAPI="GooglePlacesSearch"
         enablePoweredByContainer={false}
-        debounce={500}
+        // debounce={500}
         textInputProps={{
           placeholderTextColor: DISABLED,
           focusable: true,
@@ -374,7 +412,7 @@ const Rental = props => {
         fetchDetails={true}
         GooglePlacesSearchQuery={{
           rankby: '',
-          type: 'hospital',
+          type: 'store',
           radius: 2.1134410777,
         }}
         onPress={(data, details) => {
@@ -385,7 +423,8 @@ const Rental = props => {
           setDeleviveryLocationName(
             `${details.name},${details.formatted_address}`,
           );
-          setDeleviveryLocationName(details.name);
+          // setDeleviveryLocationName(details.name);
+          animateMarkerAndCamera();
           console.log('Region after Select the Place: ', PickupregionPin);
           console.log(details);
         }}
@@ -406,9 +445,11 @@ const Rental = props => {
         }}
         renderRightButton={() => {
           return (
-            <View style={styles.renderRightButtonStyles}>
+            <TouchableOpacity
+              style={styles.renderRightButtonStyles}
+              onPress={() => animateMarkerAndCamera()}>
               <Search name="search" size={20} color={DISABLED} />
-            </View>
+            </TouchableOpacity>
           );
         }}
       />
@@ -429,6 +470,7 @@ const Rental = props => {
         </View>
       )}
       <MapView
+        ref={mapRef} //There is also change here
         style={styles.map}
         customMapStyle={colorScheme === 'dark' ? mapDarkStyle : mapLightStyle}
         showsCompass={true}
@@ -438,21 +480,18 @@ const Rental = props => {
         zoomEnabled={true}
         zoomControlEnabled={true}
         initialRegion={Pickupregion}>
-        <Marker
+        <MarkerAnimated
           key={'PICKUP_MAP_MARKER'}
           title="Dropoff Location"
           description="This is a Description"
           coordinate={PickupregionPin}
           identifier={'mark1'}
-          image={Customamrk}
-          draggable={true}
-          // centerOffset={{x: 0, y: 0}}
-          // onDragStart={e => {
-          // }}
-          onDragEnd={e => {
-            setPickupregionPin(e.nativeEvent.coordinate);
-            console.log('Drag start', PickupregionPin);
+          ref={marker => {
+            setMyMarker(marker);
           }}
+          draggable={false}
+          centerOffset={{x: 0, y: 0}}
+          image={Customamrk}
         />
       </MapView>
     </View>
