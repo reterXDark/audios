@@ -74,7 +74,7 @@ const PickupDetailsHeadline = () => {
       </View>
       <View style={styles.lowerTextContainer}>
         <Text style={styles.lowerText}>{DevlocationDATA}</Text>
-        <Text style={styles.lowerText}>{`${text}`}</Text>
+        <Text style={styles.lowerTextTimeData}>{`${text}`}</Text>
         <View
           style={{marginRight: 20}}
           onPress={() => {
@@ -150,10 +150,21 @@ const styles = StyleSheet.create({
     // backgroundColor: 'tomato',
     alignSelf: 'center',
     width: windowWidth * 0.9,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
   lowerText: {
+    fontFamily: Helvetica_Neue_Medium,
+    fontSize: 15,
+    // backgroundColor: 'green',
+    textAlign: 'left',
+    textAlignVertical: 'center',
+    lineHeight: 20,
+    color: LIGHT_THEME,
+    height: 'auto',
+    width: windowWidth * 0.4,
+  },
+  lowerTextTimeData: {
     fontFamily: Helvetica_Neue_Medium,
     fontSize: 16,
     // backgroundColor: 'green',
@@ -161,6 +172,8 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     lineHeight: 20,
     color: LIGHT_THEME,
+    height: 'auto',
+    width: 'auto',
   },
   inputIconContainer: {
     // backgroundColor: 'tomato',

@@ -1,93 +1,19 @@
 import React, {useState} from 'react';
-import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
-import EditIcon from 'react-native-vector-icons/MaterialIcons';
-import EPDProducts from '../../../features/cart/EPDProducts';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import NavigationStrings from '../../../Navigation/NavigationStrings';
 import CustomHeader from '../../Components/CustomHeader';
 import PickupDetailsHeadline from '../../Components/PickupDetailsHeadline';
-import {DARK_THEME, LIGHT_THEME} from '../../helper/commonStyle';
-// import SpeakerImage from '../../Images/Speaker.jpg';
+import {DARK_THEME} from '../../helper/commonStyle';
 import styles from './styles';
-
-const eventpackagesData = [
-  {
-    id: '1A',
-    packageName: '300 Person Package',
-    packageDescription:
-      'This package is good for an event with 300 people or less',
-    price: 200,
-    SpeakerImage:
-      'https://firebasestorage.googleapis.com/v0/b/audio-74b54.appspot.com/o/prductdetails.jpg?alt=media&token=046215ea-d223-45a0-9846-9d7f4b8c3d53',
-    quantity: 1,
-    // Brand_1: {Name1: 'Brand 1', Bquantity1: 6, Bprice1: 500},
-    // Brand_2: {Name2: 'Brand 2', Bquantity2: 8, Bprice2: 200},
-    // Brand_3: {Name3: 'Brand 3', Bquantity3: 9, Bprice3: 400},
-  },
-  {
-    id: '1B',
-    packageName: '1000 Person Package',
-    packageDescription:
-      'This package is good for an event with 1000 people or less',
-    price: 500,
-    SpeakerImage:
-      'https://firebasestorage.googleapis.com/v0/b/audio-74b54.appspot.com/o/prductdetails.jpg?alt=media&token=046215ea-d223-45a0-9846-9d7f4b8c3d53',
-    quantity: 1,
-    // Brand_1: {Name1: 'Brand 1', Bquantity1: 6, Bprice1: 500},
-    // Brand_2: {Name2: 'Brand 2', Bquantity2: 8, Bprice2: 200},
-    // Brand_3: {Name3: 'Brand 3', Bquantity3: 9, Bprice3: 400},
-  },
-];
-const individualpackagesData = [
-  {
-    id: '2A',
-    packageName: 'Mixer',
-    packageDescription: 'This Package is good for 50+ people...',
-    price: '20 - 80',
-    SpeakerImage:
-      'https://firebasestorage.googleapis.com/v0/b/audio-74b54.appspot.com/o/cartImage.jpg?alt=media&token=8d9747f9-d682-4a01-b3f4-1e91a7827222',
-    quantity: 1,
-    // Brand_1: {Name1: 'Brand 1', Bquantity1: 6, Bprice1: 500},
-    // Brand_2: {Name2: 'Brand 2', Bquantity2: 8, Bprice2: 200},
-    // Brand_3: {Name3: 'Brand 3', Bquantity3: 9, Bprice3: 400},
-  },
-  {
-    id: '2B',
-    packageName: 'LED Light',
-    packageDescription: 'This Package is good for 50+ people...',
-    price: '20 - 80',
-    SpeakerImage:
-      'https://firebasestorage.googleapis.com/v0/b/audio-74b54.appspot.com/o/LEDLight.jpg?alt=media&token=589df23d-ab15-4395-957b-3a2ea8b301cb',
-    quantity: 1,
-    // Brand_1: {Name1: 'Brand 1', Bquantity1: 0, Bprice1: 600},
-    // Brand_2: {Name2: 'Brand 2', Bquantity2: 0, Bprice2: 700},
-    // Brand_3: {Name3: 'Brand 3', Bquantity3: 0, Bprice3: 200},
-  },
-  {
-    id: '2C',
-    packageName: 'Microphone',
-    packageDescription: 'This Package is good for 50+ people...',
-    price: '20 - 80',
-    SpeakerImage:
-      'https://firebasestorage.googleapis.com/v0/b/audio-74b54.appspot.com/o/Microphone.jpg?alt=media&token=c460f143-d639-4728-8405-3364c1a13670',
-    quantity: 1,
-    // Brand_1: {Name1: 'Brand 1', Bquantity1: 0, Bprice1: 700},
-    // Brand_2: {Name2: 'Brand 2', Bquantity2: 0, Bprice2: 860},
-    // Brand_3: {Name3: 'Brand 3', Bquantity3: 0, Bprice3: 100},
-  },
-  {
-    id: '2D',
-    packageName: 'Wireless Loudspeaker',
-    packageDescription:
-      'Audios speakers can reliably connect and stream synch...',
-    price: '20 - 80',
-    SpeakerImage:
-      'https://firebasestorage.googleapis.com/v0/b/audio-74b54.appspot.com/o/prductdetails.jpg?alt=media&token=046215ea-d223-45a0-9846-9d7f4b8c3d53',
-    quantity: 1,
-    // Brand_1: {Name1: 'Brand 1', Bquantity1: 0, Bprice1: 540},
-    // Brand_2: {Name2: 'Brand 2', Bquantity2: 0, Bprice2: 420},
-    // Brand_3: {Name3: 'Brand 3', Bquantity3: 0, Bprice3: 600},
-  },
-];
+import firestore from '@react-native-firebase/firestore';
+import {useEffect} from 'react';
 
 const EventItem = ({
   id,
@@ -187,9 +113,6 @@ const Products = props => {
     price,
     SpeakerImage,
     quantity,
-    // Brand_1,
-    // Brand_2,
-    // Brand_3,
   }) => {
     props.navigation.navigate(NavigationStrings.ProductDetails, {
       id: id,
@@ -198,9 +121,6 @@ const Products = props => {
       price: price,
       SpeakerImage: SpeakerImage,
       quantity: quantity,
-      // Brand_1: Brand_1,
-      // Brand_2: Brand_2,
-      // Brand_3: Brand_3,
     });
   };
 
@@ -211,9 +131,6 @@ const Products = props => {
     price,
     SpeakerImage,
     quantity,
-    // Brand_1,
-    // Brand_2,
-    // Brand_3,
   }) => {
     props.navigation.navigate(NavigationStrings.ProductBrands, {
       id: id,
@@ -222,11 +139,63 @@ const Products = props => {
       price: price,
       SpeakerImage: SpeakerImage,
       quantity: quantity,
-      // Brand_1: Brand_1,
-      // Brand_2: Brand_2,
-      // Brand_3: Brand_3,
     });
   };
+
+  const [Loading, setLoading] = useState(true);
+  const [eventpackagesData, seteventpackagesData] = useState([]);
+  const [individualpackagesData, setindividualpackagesData] = useState([]);
+
+  const getEventItems = () => {
+    /*
+    Getting 
+    Event Products
+   */
+    firestore()
+      .collection('Products')
+      .where('brands', '==', false)
+      .get()
+      .then(querySnapshot => {
+        console.log('Total Event Products: ', querySnapshot.size);
+        setLoading(false);
+        querySnapshot.forEach(documentSnapshot => {
+          console.log(
+            console.log(documentSnapshot.data()),
+            seteventpackagesData(pre => [...pre, documentSnapshot.data()]),
+          );
+        });
+      })
+      .catch(err => {
+        console.log('Error getting Event Products', err);
+      });
+  };
+  const getIndividualItems = () => {
+    /*
+    Getting 
+    Individual Products
+   */
+    firestore()
+      .collection('Products')
+      .where('brands', '==', true)
+      .get()
+      .then(querySnapshot => {
+        console.log('Total Individual Products: ', querySnapshot.size);
+        setLoading(false);
+        querySnapshot.forEach(documentSnapshot => {
+          setindividualpackagesData(pre => [...pre, documentSnapshot.data()]),
+            console.log(console.log(documentSnapshot.data()));
+        });
+      })
+      .catch(err => {
+        console.log('Error getting Individual Products', err);
+      });
+  };
+
+  useEffect(() => {
+    const eve = getEventItems();
+    const ini = getIndividualItems();
+    return () => eve, ini;
+  }, [1]);
 
   return (
     <View style={styles.container}>
@@ -251,85 +220,32 @@ const Products = props => {
         <View style={styles.headingContainer}>
           <Text style={styles.heading}>Event Packages</Text>
         </View>
-        <View style={styles.eventpakgContainer}>
-          {eventpackagesData.map(
-            (
-              {
-                id,
-                packageName,
-                packageDescription,
-                SpeakerImage,
-                price,
-                quantity,
-                // Brand_1,
-                // Brand_2,
-                // Brand_3,
-              },
-              u,
-            ) => (
-              <EventItem
-                key={id}
-                id={id}
-                packageName={packageName}
-                packageDescription={packageDescription}
-                price={price}
-                SpeakerImage={SpeakerImage}
-                // Brand_1={Brand_1}
-                // Brand_2={Brand_2}
-                // Brand_3={Brand_3}
-                onPress={() => {
-                  navigateToDetails({
-                    id,
-                    packageName,
-                    packageDescription,
-                    price,
-                    SpeakerImage,
-                    quantity,
-                    // Brand_1,
-                    // Brand_2,
-                    // Brand_3,
-                  });
-                }}
-              />
-            ),
-          )}
-        </View>
-        {/*  */}
-        <View style={styles.headingContainer}>
-          <Text style={styles.heading}>Individuals Items</Text>
-        </View>
-        <View style={styles.individualContainer}>
-          {individualpackagesData.map(
-            (
-              {
-                id,
-                packageName,
-                packageDescription,
-                SpeakerImage,
-                price,
-                quantity,
-                // Brand_1,
-                // Brand_2,
-                // Brand_3,
-              },
-              u,
-            ) => {
-              // const {Name1, Bquantity1, Bprice1} = Brand_1;
-              // const {Name2, Bquantity2, Bprice2} = Brand_2;
-              // const {Name3, Bquantity3, Bprice3} = Brand_3;
-              return (
-                <IndividualItem
+
+        {Loading ? (
+          <ActivityIndicator size={'large'} color={DARK_THEME} />
+        ) : (
+          <View style={styles.eventpakgContainer}>
+            {eventpackagesData.map(
+              (
+                {
+                  id,
+                  packageName,
+                  packageDescription,
+                  SpeakerImage,
+                  price,
+                  quantity,
+                },
+                u,
+              ) => (
+                <EventItem
                   key={id}
                   id={id}
                   packageName={packageName}
                   packageDescription={packageDescription}
                   price={price}
                   SpeakerImage={SpeakerImage}
-                  // Brand_1={Brand_1}
-                  // Brand_2={Brand_2}
-                  // Brand_3={Brand_3}
                   onPress={() => {
-                    navigateToProductBrands({
+                    navigateToDetails({
                       id,
                       packageName,
                       packageDescription,
@@ -342,10 +258,54 @@ const Products = props => {
                     });
                   }}
                 />
-              );
-            },
-          )}
+              ),
+            )}
+          </View>
+        )}
+        {/*  */}
+        <View style={styles.headingContainer}>
+          <Text style={styles.heading}>Individuals Items</Text>
         </View>
+        {Loading ? (
+          <ActivityIndicator size={'large'} color={DARK_THEME} />
+        ) : (
+          <View style={styles.individualContainer}>
+            {individualpackagesData.map(
+              (
+                {
+                  id,
+                  packageName,
+                  packageDescription,
+                  SpeakerImage,
+                  price,
+                  quantity,
+                },
+                u,
+              ) => {
+                return (
+                  <IndividualItem
+                    key={id}
+                    id={id}
+                    packageName={packageName}
+                    packageDescription={packageDescription}
+                    price={price}
+                    SpeakerImage={SpeakerImage}
+                    onPress={() => {
+                      navigateToProductBrands({
+                        id,
+                        packageName,
+                        packageDescription,
+                        price,
+                        SpeakerImage,
+                        quantity,
+                      });
+                    }}
+                  />
+                );
+              },
+            )}
+          </View>
+        )}
         <TouchableOpacity
           style={styles.customButton}
           activeOpacity={0.5}
